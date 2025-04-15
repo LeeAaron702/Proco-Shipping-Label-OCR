@@ -157,4 +157,68 @@ This helps the OpenAI model receive consistently formatted input and increases r
 
 ---
 
+# 🔁 Ideal User Flow & Error Handling
+
+This app is designed to support a fast and semi-automated workflow — but as with all OCR processes, occasional human verification is critical. Here's the recommended user process and how to handle potential issues:
+
+---
+
+### ✅ Normal Flow
+
+1. **Capture the Label**
+   - Place the box in view of the webcam.
+   - Press `SPACE` to capture a single label photo, or press `M` to begin **multi-photo mode** for labels that wrap around boxes.
+   - The system will capture 1 or 2 images of the label, stitch them if needed, and send them to OpenAI for OCR processing.
+
+2. **Label is Processed**
+   - The label image(s) are uploaded to Google Drive.
+   - The OpenAI model extracts structured data (sender, recipient, tracking numbers, etc.)
+   - A **partial row** is appended to the Google Sheet with this data.
+
+3. **Capture Box Contents**
+   - While the label is being processed in the background, the user can begin opening the box.
+   - Once opened, press `SPACE` again to take a photo of the **box contents**.
+   - This image is uploaded to Drive, and the previously added row is updated with the box contents image URL.
+
+4. **Review the Sheet**
+   - After the content image is captured, the Google Sheet should now have:
+     - Full shipping label details
+     - Image URLs for the label and box contents
+   - The user should **compare the row in the sheet with the physical label in hand** before disposing of the box or moving on.
+
+---
+
+### ⚠️ Handling Errors
+
+#### Minor OCR Errors (e.g. a misspelled name or company)
+
+- Manually correct the data in the Google Sheet.
+- Highlight the corrected cell with a **light red fill**.
+- In **Column P (Remarks)**, add a note describing the error.
+  - Example: `OCR misread tracking #` or `Company name cut off`
+- These remarks help the developer fine-tune the model with real-world feedback.
+
+#### Major OCR Errors or Blurry Photos
+
+- If the label OCR is **completely incorrect** (e.g. due to poor image quality):
+  1. Highlight the **entire row**.
+  2. Right-click and select **Delete row** from Google Sheets.
+  3. Return to the app and **rescan the label** (you do not need to restart the app).
+
+📌 **Tip:** Always review the Google Sheet label data before cutting open the box. If the scan is invalid, you can easily redo the capture without needing to repack the contents.
+
+---
+
+### 🧠 Best Practices
+
+- **Rotate the viewport (O/P keys)** before capturing so the label appears right-side up.
+- Ensure **clear, glare-free, well-lit photos** to minimize OCR mistakes.
+- Avoid motion blur: hold the box still for a second before capturing.
+- Use a **4K webcam** if possible for better accuracy.
+- Always add remarks for issues to help improve the model via future fine-tuning.
+
+---
+
+By following this flow and correcting where needed, you ensure data accuracy and contribute directly to improving the OCR performance over time.
+
 
