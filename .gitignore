@@ -1,0 +1,22 @@
+# === VIRTUAL ENVIRONMENTS ===
+env/
+.venv/
+
+# === PYTHON CACHE ===
+__pycache__/
+*.py[cod]
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === LOGS ===
+*.log
+
+# === CREDENTIALS & CONFIG ===
+.env
+*.json
+
+# === LOCAL REFERENCE FILES ===
+readme-accounts.md
