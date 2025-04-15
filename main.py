@@ -391,23 +391,13 @@ while True:
     )
     cv2.putText(
         overlay,
-        f"[O/P] Rotate Left/Right  |  Rotation: {rotation_angle}",
+        f"[O/P] Rotate Left/Right  |  Rotation: {rotation_angle} | Press ESC to quit",
         (60, 70),
         font,
         0.8,
         (0, 255, 0),
         2,
-    ),
-    cv2.putText(
-        overlay,
-        f"Press ESC to quit",
-        (60, 100),
-        font,
-        0.8,
-        (0, 255, 0),
-        2,
     )
-
     if capture_stage == "contents":
         cv2.putText(
             overlay,
