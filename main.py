@@ -401,7 +401,7 @@ while True:
     cv2.putText(
         overlay,
         f"Press ESC to quit",
-        (60, 90),
+        (60, 100),
         font,
         0.8,
         (0, 255, 0),
