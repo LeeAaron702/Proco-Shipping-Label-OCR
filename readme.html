@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Color Inbound OCR - Smart Shipping Label Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code, pre {
+            background-color: #eee;
+            padding: 5px;
+            border-radius: 3px;
+            display: block;
+            white-space: pre-wrap;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+        .note {
+            background-color: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffeeba;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Professor Color Inbound OCR - Smart Shipping Label Reader</h1>
+
+    <h2>Overview</h2>
+    <p>This project is a smart OCR system designed for warehouse environments and small reselling companies to capture shipping label information and log it into Google Sheets, using OpenAI as a smart OCR for text extraction and Google Drive for image hosting.</p>
+
+    <h2>🚀 Features</h2>
+    <ul>
+        <li>Automatic capture of shipping labels and box contents using a webcam</li>
+        <li>Multi-photo mode for labels that wrap around boxes</li>
+        <li>OCR powered by OpenAI (fine-tuned GPT-4o model)</li>
+        <li>Google Drive image upload</li>
+        <li>Google Sheets row creation and update</li>
+        <li>Asynchronous threading to prevent delays or blocking</li>
+        <li>Real-time visual feedback via OpenCV overlay</li>
+        <li>Automatic update from GitHub on each run</li>
+    </ul>
+
+    <h2>📁 Folder Setup and Files</h2>
+    <ul>
+        <li><code>main.py</code> — The OCR application</li>
+        <li><code>run.bat</code> — The launcher that updates and runs the app</li>
+        <li><code>requirements.txt</code> — All required Python dependencies</li>
+        <li><code>.env</code> — Your local environment variables</li>
+        <li><code>.env.example</code> — A template for safe sharing</li>
+        <li><code>README.md</code> — This file</li>
+    </ul>
+
+    <h2>🔧 Requirements</h2>
+    <ul>
+        <li>Windows 11 PC</li>
+        <li>A webcam (ideally 4K, minimum 1080p)</li>
+        <li>Python 3.10+</li>
+        <li>Git for Windows</li>
+        <li>OpenAI account with API key</li>
+        <li>Google Cloud project with Sheets & Drive API enabled</li>
+    </ul>
+
+    <h2>📦 Google Setup Instructions</h2>
+    <h3>1. Create a Google Cloud Project</h3>
+    <p><a href="https://console.cloud.google.com/">Google Cloud Console</a> → Create a new project</p>
+
+    <h3>2. Enable APIs</h3>
+    <ul>
+        <li>Google Drive API</li>
+        <li>Google Sheets API</li>
+    </ul>
+
+    <h3>3. Create a Service Account</h3>
+    <ul>
+        <li>IAM & Admin → Service Accounts</li>
+        <li>Create and assign "Editor" role</li>
+        <li>Click "Add Key → JSON", download and place in project folder</li>
+    </ul>
+
+    <h3>4. Share Access</h3>
+    <p>Share your Google Drive folder and Google Sheet with the client email from the JSON file</p>
+
+    <h3>5. Get Folder and Sheet ID</h3>
+    <ul>
+        <li><strong>Folder ID:</strong> String after <code>/folders/</code></li>
+        <li><strong>Spreadsheet ID:</strong> String between <code>/d/</code> and <code>/edit</code></li>
+    </ul>
+
+    <h2>📁 Google Sheet Template</h2>
+    <p>Use the example CSV to create a Google Sheet. Column headers:</p>
+    <pre>Date and Time	Sender Name	Sender Company	Sender Phone	Sender Address	Recipient Name	Recipient Company	Recipient Phone	Recipient Address	Tracking #1	Carrier #1	Tracking #2	Carrier #2	Label Images URLs	Box Contents URL</pre>
+
+    <h2>📄 .env Format</h2>
+    <pre>
+OPENAI_API_KEY=your-openai-key-here
+SERVICE_ACCOUNT_FILE=ebay-shipping-label-ocr-bb222bb.json
+FOLDER_ID=your-google-drive-folder-id
+SPREADSHEET_ID=your-google-sheet-id
+SPREADSHEET_URL=https://docs.google.com/spreadsheets/...
+    </pre>
+
+    <h2>▶️ How to Run the App</h2>
+    <ol>
+        <li>Install Python and Git</li>
+        <li>Clone the repo:
+            <pre>git clone https://github.com/YourUsername/YourRepo.git "Professor Color Inbound OCR"</pre>
+        </li>
+        <li>Place `.env` and JSON file in the folder</li>
+        <li>Double-click <code>run.bat</code></li>
+    </ol>
+
+    <h3>What `run.bat` Does:</h3>
+    <ul>
+        <li>Pulls latest code from GitHub</li>
+        <li>Opens Google Sheet</li>
+        <li>Sets up virtual environment</li>
+        <li>Installs dependencies</li>
+        <li>Launches the app</li>
+    </ul>
+
+    <h2>💻 User Flow</h2>
+    <ol>
+        <li>Start App</li>
+        <li>Camera Opens</li>
+        <li>Press SPACE → Capture label</li>
+        <li>Press M → Multi-photo mode (then label & contents)</li>
+        <li>Photos are uploaded & OCR processed</li>
+        <li>Google Sheet is updated</li>
+        <li>Threads ensure smooth operation</li>
+    </ol>
+
+    <h2>🧵 Label Orientation & Viewport</h2>
+    <p>Use O/P keys to rotate the viewport so the label is upright. Here is an example:</p>
+    <img src="./Correct%20Label%20Orientation.png" alt="Correct Label Orientation">
+
+    <h2>🛠 Troubleshooting</h2>
+    <ul>
+        <li>Check webcam permissions</li>
+        <li>Ensure `.env` is present</li>
+        <li>Verify Google service access</li>
+        <li>Ensure column headers are correct</li>
+    </ul>
+
+    <h1>🔁 Ideal User Flow & Error Handling</h1>
+
+    <h3>✅ Normal Flow</h3>
+    <ol>
+        <li>Capture label (SPACE / M)</li>
+        <li>Label image uploaded & processed</li>
+        <li>Capture box contents</li>
+        <li>Row updated with contents image</li>
+        <li>Review Google Sheet entry before discarding box</li>
+    </ol>
+
+    <h3>⚠️ Handling Errors</h3>
+    <h4>Minor Errors</h4>
+    <ul>
+        <li>Correct in the Google Sheet</li>
+        <li>Highlight cell in light red</li>
+        <li>Add remark in Column P</li>
+    </ul>
+
+    <h4>Major Errors</h4>
+    <ul>
+        <li>Highlight entire row</li>
+        <li>Delete the row</li>
+        <li>Rescan the label</li>
+    </ul>
+
+    <div class="note">
+        <strong>Tip:</strong> Always check the Sheet entry before opening the box.
+    </div>
+
+    <h3>🧠 Best Practices</h3>
+    <ul>
+        <li>Rotate viewport before capture</li>
+        <li>Use clear, well-lit, glare-free photos</li>
+        <li>Avoid motion blur</li>
+        <li>Use 4K webcam if possible</li>
+        <li>Log issues in remarks to improve OCR model</li>
+    </ul>
+
+</body>
+</html>
