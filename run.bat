@@ -1,8 +1,8 @@
 @echo off
-:: Change to the folder where this script lives
+:: Change to the folder this script lives in
 cd /d "%~dp0"
 
-:: === Load .env manually (look for SPREADSHEET_URL line)
+:: --- Load spreadsheet URL from .env ---
 setlocal enabledelayedexpansion
 set "SPREADSHEET_URL="
 for /f "usebackq tokens=1,* delims==" %%A in (".env") do (
@@ -14,7 +14,13 @@ if defined SPREADSHEET_URL (
     echo Warning: SPREADSHEET_URL not found in .env
 )
 
-:: === Virtual Environment Setup
+:: --- Pull latest changes from GitHub ---
+echo Checking for updates...
+git pull origin main
+echo Update complete.
+echo.
+
+:: --- Setup virtual environment ---
 if not exist "env\Scripts\activate.bat" (
     echo Virtual environment not found.
     echo Creating virtual environment...
@@ -23,12 +29,14 @@ if not exist "env\Scripts\activate.bat" (
 
 call env\Scripts\activate
 
+:: --- Install dependencies if needed ---
 pip show google-auth >nul 2>&1
 if errorlevel 1 (
     echo Installing dependencies...
     pip install -r requirements.txt
 )
 
+:: --- Launch the app ---
 echo Running Smart Label OCR...
 python main.py
 
