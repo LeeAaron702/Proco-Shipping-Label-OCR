@@ -397,6 +397,15 @@ while True:
         0.8,
         (0, 255, 0),
         2,
+    ),
+    cv2.putText(
+        overlay,
+        f"Press ESC to quit",
+        (60, 90),
+        font,
+        0.8,
+        (0, 255, 0),
+        2,
     )
 
     if capture_stage == "contents":
